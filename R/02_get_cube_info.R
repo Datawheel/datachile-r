@@ -3,7 +3,7 @@
 #' @param path Must be a valid cube name that can be accesed by running `get_cubes()`
 #' @keywords functions
 
-get_cube_info <- function(path) {
+get_cube <- function(path) {
   ua <- user_agent("httr")
 
   path <- paste0("cubes/", path)

@@ -1,11 +1,11 @@
-#' Obtain available cubes
+#' Obtain geographical units (comunas)
 #' @export
 #' @keywords functions
 
-get_cubes <- function() {
+get_comunas <- function() {
   ua <- user_agent("httr")
 
-  url <- "https://chilecube.datawheel.us/cubes"
+  url <- "https://chilecube.datachile.io/cubes/exports/dimensions/Geography/levels/Comuna/members"
 
   resp <- GET(url, ua)
 
@@ -14,6 +14,8 @@ get_cubes <- function() {
   }
 
   parsed <- fromJSON(content(resp, "text"), simplifyVector = TRUE)
+
+  parsed[5] <- NULL; parsed[5] <- NULL
 
   if (http_error(resp)) {
     stop(
@@ -27,13 +29,11 @@ get_cubes <- function() {
     )
   }
 
-  parsed <- tibble(cube = parsed$cubes$name) %>% distinct()
-
   structure(
     list(
-      cubes = parsed,
-      path = url,
-      response = resp
+      comunas = parsed,
+      path_comunas = url,
+      response_comunas = resp
     ),
     class = "datachile_api"
   )
